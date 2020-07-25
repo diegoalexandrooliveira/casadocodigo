@@ -1,7 +1,8 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.application;
+package br.com.jornadadeveficiente.casadocodigo.autor.api;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.Autor;
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.AutorRepository;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.AutorRepository;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.UniqueEmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,8 +29,8 @@ public class AutoresController {
   }
 
   @PostMapping
-  public ResponseEntity<AutorResponse> criaAutor(@Valid @RequestBody AutorRequest autorRequest) {
-    Autor autor = autorRequest.toModel();
+  public ResponseEntity<AutorResponse> criaAutor(@Valid @RequestBody NovoAutorRequest novoAutorRequest) {
+    Autor autor = novoAutorRequest.toModel();
     autorRepository.save(autor);
     return ResponseEntity.ok(AutorResponse.fromModel(autor));
   }

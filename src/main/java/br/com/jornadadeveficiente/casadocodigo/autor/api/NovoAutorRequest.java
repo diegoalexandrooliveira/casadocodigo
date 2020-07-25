@@ -1,6 +1,6 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.application;
+package br.com.jornadadeveficiente.casadocodigo.autor.api;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.Autor;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -8,12 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-public class AutorRequest {
+public class NovoAutorRequest {
 
   @NotBlank
   private String nome;
 
-  @Size
   @NotBlank
   private String descricao;
 
@@ -21,7 +20,7 @@ public class AutorRequest {
   @NotBlank
   private String email;
 
-  public AutorRequest(@NotBlank String nome, @Size @NotBlank String descricao, @Email @NotBlank String email) {
+  public NovoAutorRequest(@NotBlank String nome, @Size @NotBlank String descricao, @Email @NotBlank String email) {
     this.nome = nome;
     this.descricao = descricao;
     this.email = email;

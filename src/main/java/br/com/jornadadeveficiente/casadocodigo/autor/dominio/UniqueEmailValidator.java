@@ -1,7 +1,6 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.application;
+package br.com.jornadadeveficiente.casadocodigo.autor.dominio;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.Autor;
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.AutorRepository;
+import br.com.jornadadeveficiente.casadocodigo.autor.api.NovoAutorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,7 +20,7 @@ public class UniqueEmailValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> aClass) {
-    return AutorRequest.class.isAssignableFrom(aClass);
+    return NovoAutorRequest.class.isAssignableFrom(aClass);
   }
 
   @Override
@@ -31,11 +30,11 @@ public class UniqueEmailValidator implements Validator {
       return;
     }
 
-    AutorRequest autorRequest = (AutorRequest) o;
+    NovoAutorRequest novoAutorRequest = (NovoAutorRequest) o;
 
-    Optional<Autor> possivelAutor = autorRepository.findByEmail(autorRequest.getEmail());
+    Optional<Autor> possivelAutor = autorRepository.findByEmail(novoAutorRequest.getEmail());
     if (possivelAutor.isPresent()) {
-      errors.rejectValue("email", "EmailDuplicado", new Object[]{autorRequest.getEmail()}, null);
+      errors.rejectValue("email", "EmailDuplicado", new Object[]{novoAutorRequest.getEmail()}, null);
     }
   }
 }

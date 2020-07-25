@@ -1,9 +1,9 @@
 package br.com.jornadadeveficiente.casadocodigo.autor;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.application.AutorRequest;
-import br.com.jornadadeveficiente.casadocodigo.autor.application.AutorResponse;
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.Autor;
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.AutorRepository;
+import br.com.jornadadeveficiente.casadocodigo.autor.api.AutorResponse;
+import br.com.jornadadeveficiente.casadocodigo.autor.api.NovoAutorRequest;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.AutorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class AutorControllerTests {
   @Test
   void criaAutor() throws Exception {
     autorRepository.deleteAll();
-    AutorRequest autor = new AutorRequest("Diego", "Bom autor", "teste@teste.com");
+    NovoAutorRequest autor = new NovoAutorRequest("Diego", "Bom autor", "teste@teste.com");
 
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
       .post("/api/autores")

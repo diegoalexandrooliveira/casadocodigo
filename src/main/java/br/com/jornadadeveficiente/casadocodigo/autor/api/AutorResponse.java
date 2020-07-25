@@ -1,6 +1,6 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.application;
+package br.com.jornadadeveficiente.casadocodigo.autor.api;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.domain.Autor;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

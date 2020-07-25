@@ -1,4 +1,4 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.domain;
+package br.com.jornadadeveficiente.casadocodigo.autor.dominio;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

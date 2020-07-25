@@ -1,4 +1,4 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.domain;
+package br.com.jornadadeveficiente.casadocodigo.autor.dominio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
