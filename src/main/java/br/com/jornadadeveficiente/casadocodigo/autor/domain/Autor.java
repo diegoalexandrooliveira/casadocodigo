@@ -1,6 +1,7 @@
 package br.com.jornadadeveficiente.casadocodigo.autor.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Entity(name = "autores")
 @Getter
+@NoArgsConstructor
 public class Autor {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
