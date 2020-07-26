@@ -1,6 +1,7 @@
 package br.com.jornadadeveficiente.casadocodigo.autor.api;
 
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
+import br.com.jornadadeveficiente.casadocodigo.comum.dominio.UniqueValue;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -18,6 +19,7 @@ public class NovoAutorRequest {
 
   @Email
   @NotBlank
+  @UniqueValue(fieldName = "email", entity = "autores")
   private String email;
 
   public NovoAutorRequest(@NotBlank String nome, @Size @NotBlank String descricao, @Email @NotBlank String email) {
@@ -29,6 +31,4 @@ public class NovoAutorRequest {
   public Autor toModel() {
     return new Autor(nome, descricao, email);
   }
-
-
 }

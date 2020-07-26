@@ -2,11 +2,12 @@ package br.com.jornadadeveficiente.casadocodigo.autor.api;
 
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.AutorRepository;
-import br.com.jornadadeveficiente.casadocodigo.autor.dominio.UniqueEmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -15,18 +16,12 @@ import javax.validation.Valid;
 public class AutoresController {
 
   private AutorRepository autorRepository;
-  private UniqueEmailValidator uniqueEmailValidator;
 
   @Autowired
-  public AutoresController(AutorRepository autorRepository, UniqueEmailValidator uniqueEmailValidator) {
+  public AutoresController(AutorRepository autorRepository) {
     this.autorRepository = autorRepository;
-    this.uniqueEmailValidator = uniqueEmailValidator;
   }
 
-  @InitBinder
-  public void init(WebDataBinder binder) {
-    binder.addValidators(uniqueEmailValidator);
-  }
 
   @PostMapping
   public ResponseEntity<AutorResponse> criaAutor(@Valid @RequestBody NovoAutorRequest novoAutorRequest) {

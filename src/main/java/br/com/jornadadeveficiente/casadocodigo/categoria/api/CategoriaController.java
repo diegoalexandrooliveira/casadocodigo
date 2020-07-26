@@ -3,11 +3,12 @@ package br.com.jornadadeveficiente.casadocodigo.categoria.api;
 
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.Categoria;
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.CategoriaRepository;
-import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.UniqueCategoriaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -17,18 +18,12 @@ public class CategoriaController {
 
 
   private CategoriaRepository categoriaRepository;
-  private UniqueCategoriaValidator uniqueCategoriaValidator;
 
   @Autowired
-  public CategoriaController(CategoriaRepository categoriaRepository, UniqueCategoriaValidator uniqueCategoriaValidator) {
+  public CategoriaController(CategoriaRepository categoriaRepository) {
     this.categoriaRepository = categoriaRepository;
-    this.uniqueCategoriaValidator = uniqueCategoriaValidator;
   }
 
-  @InitBinder
-  public void init(WebDataBinder binder) {
-    binder.addValidators(uniqueCategoriaValidator);
-  }
 
   @PostMapping
   public ResponseEntity<CategoriaResponse> salvar(@RequestBody @Valid NovaCategoriaRequest novaCategoriaRequest) {
