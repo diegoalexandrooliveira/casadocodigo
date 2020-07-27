@@ -27,4 +27,8 @@ public class Categoria {
     Assert.hasText(nome, "Nome deve estar preenchido.");
     this.nome = nome;
   }
+
+  public Categoria(UUID id) {
+    this.id = id;
+  }
 }

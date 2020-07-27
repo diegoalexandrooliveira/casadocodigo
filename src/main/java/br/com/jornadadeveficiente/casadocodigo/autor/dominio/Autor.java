@@ -1,5 +1,6 @@
 package br.com.jornadadeveficiente.casadocodigo.autor.dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Entity(name = "autores")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Autor {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,5 +43,9 @@ public class Autor {
     this.nome = nome;
     this.descricao = descricao;
     this.email = email;
+  }
+
+  public Autor(UUID id){
+    this.id = id;
   }
 }
