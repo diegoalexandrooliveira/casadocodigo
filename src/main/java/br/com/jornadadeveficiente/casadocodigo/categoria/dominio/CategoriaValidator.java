@@ -1,4 +1,4 @@
-package br.com.jornadadeveficiente.casadocodigo.autor.dominio;
+package br.com.jornadadeveficiente.casadocodigo.categoria.dominio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,16 +7,16 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AutorValidoValidator implements ConstraintValidator<AutorValido, Object> {
+public class CategoriaValidator implements ConstraintValidator<ValidaCategoria, Object> {
 
   @Autowired
-  private AutorRepository autorRepository;
+  private CategoriaRepository categoriaRepository;
 
   @Override
   public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
     if (Objects.isNull(o)) {
       return false;
     }
-    return autorRepository.findById(((UUID) o)).isPresent();
+    return categoriaRepository.findById(((UUID) o)).isPresent();
   }
 }

@@ -1,13 +1,15 @@
 package br.com.jornadadeveficiente.casadocodigo.livro.api;
 
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
-import br.com.jornadadeveficiente.casadocodigo.autor.dominio.AutorValido;
+import br.com.jornadadeveficiente.casadocodigo.autor.dominio.ValidaAutor;
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.Categoria;
-import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.CategoriaValida;
+import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.ValidaCategoria;
 import br.com.jornadadeveficiente.casadocodigo.comum.dominio.DataFutura;
 import br.com.jornadadeveficiente.casadocodigo.comum.dominio.UniqueValue;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.Livro;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,9 +17,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class NovoLivroRequest {
 
   @NotBlank
@@ -48,23 +54,21 @@ public class NovoLivroRequest {
   private LocalDate dataPublicacao;
 
   @NotNull
-  @CategoriaValida
+  @ValidaCategoria
   private UUID idCategoria;
 
   @NotNull
-  @AutorValido
+  @ValidaAutor
   private UUID idAutor;
 
-  public NovoLivroRequest(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotBlank String sumario, @Min(20) @NotNull BigDecimal preco, @Min(100) @NotNull Long paginas, @NotBlank String isbn, @NotNull LocalDate dataPublicacao, @NotNull UUID idCategoria, @NotNull UUID idAutor) {
-    this.titulo = titulo;
-    this.resumo = resumo;
-    this.sumario = sumario;
-    this.preco = preco;
-    this.paginas = paginas;
-    this.isbn = isbn;
-    this.dataPublicacao = dataPublicacao;
-    this.idCategoria = idCategoria;
-    this.idAutor = idAutor;
+  @JsonGetter
+  public String getDataPublicacao() {
+    return DateTimeFormatter.ISO_LOCAL_DATE.format(dataPublicacao);
+  }
+
+  @JsonSetter
+  public void setDataPublicacao(String dataPublicacao) {
+    this.dataPublicacao = LocalDate.parse(dataPublicacao, DateTimeFormatter.ISO_LOCAL_DATE);
   }
 
   public Livro toModel() {

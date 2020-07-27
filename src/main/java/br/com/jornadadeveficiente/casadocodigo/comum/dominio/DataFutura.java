@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataFutura {
 
-  String message() default "{UniqueValue}";
+  String message() default "{DataFutura}";
 
   Class<?>[] groups() default {};
 

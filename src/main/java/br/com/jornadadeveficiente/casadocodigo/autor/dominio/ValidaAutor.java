@@ -5,12 +5,12 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = {AutorValidoValidator.class})
+@Constraint(validatedBy = {AutorValidator.class})
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AutorValido {
+public @interface ValidaAutor {
 
-  String message() default "{RegistroNaoEncontrado}";
+  String message() default "{ValidaAutor}";
 
   Class<?>[] groups() default {};
 
