@@ -164,4 +164,26 @@ public class LivroControllerIT {
       .andExpect(MockMvcResultMatchers.status().is(HttpStatus.BAD_REQUEST.value()))
       .andReturn();
   }
+
+  @DisplayName("Data de publicação no passado")
+  @Test
+  public void erroData() throws Exception {
+    NovoLivroRequest novoLivroRequest = NovoLivroRequest.builder().titulo("Livro para testes")
+      .resumo("Resumo")
+      .sumario("Sumário")
+      .preco(BigDecimal.valueOf(30))
+      .paginas(101L)
+      .isbn("isbn teste")
+      .dataPublicacao(LocalDate.now().minusDays(5))
+      .idCategoria(categoria.getId())
+      .idAutor(autor.getId())
+      .build();
+
+    MvcResult requestResult = mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/livros")
+      .contentType("application/json")
+      .content(objectMapper.writeValueAsString(novoLivroRequest)))
+      .andExpect(MockMvcResultMatchers.status().is(HttpStatus.BAD_REQUEST.value()))
+      .andReturn();
+  }
 }

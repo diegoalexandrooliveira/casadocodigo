@@ -1,7 +1,7 @@
 package br.com.jornadadeveficiente.casadocodigo.livro.api;
 
-import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
-import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.Categoria;
+import br.com.jornadadeveficiente.casadocodigo.autor.api.AutorResponse;
+import br.com.jornadadeveficiente.casadocodigo.categoria.api.CategoriaResponse;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.Livro;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,12 +24,14 @@ public class LivroDTO {
   private Long paginas;
   private String isbn;
   private LocalDate dataPublicacao;
-  private Categoria categoria;
-  private Autor autor;
+  private CategoriaResponse categoria;
+  private AutorResponse autor;
 
 
   public static LivroDTO fromModel(Livro livro) {
+    CategoriaResponse categoria = CategoriaResponse.fromModel(livro.getCategoria());
+    AutorResponse autor = AutorResponse.fromModel(livro.getAutor());
     return new LivroDTO(livro.getId(), livro.getTitulo(), livro.getResumo(), livro.getSumario(), livro.getPreco(),
-      livro.getPaginas(), livro.getIsbn(), livro.getDataPublicacao(), livro.getCategoria(), livro.getAutor());
+      livro.getPaginas(), livro.getIsbn(), livro.getDataPublicacao(), categoria, autor);
   }
 }

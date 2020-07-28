@@ -4,17 +4,13 @@ import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.ValidaAutor;
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.Categoria;
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.ValidaCategoria;
-import br.com.jornadadeveficiente.casadocodigo.comum.dominio.DataFutura;
 import br.com.jornadadeveficiente.casadocodigo.comum.dominio.UniqueValue;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.Livro;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +46,8 @@ public class NovoLivroRequest {
   private String isbn;
 
   @NotNull
-  @DataFutura
+  @Future
+//  @JsonFormat(pattern = "yyyy-mm-dd", shape = JsonFormat.Shape.STRING)
   private LocalDate dataPublicacao;
 
   @NotNull
