@@ -1,9 +1,8 @@
 package br.com.jornadadeveficiente.casadocodigo.livro.api;
 
 import br.com.jornadadeveficiente.casadocodigo.autor.dominio.Autor;
-import br.com.jornadadeveficiente.casadocodigo.autor.dominio.ValidaAutor;
 import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.Categoria;
-import br.com.jornadadeveficiente.casadocodigo.categoria.dominio.ValidaCategoria;
+import br.com.jornadadeveficiente.casadocodigo.comum.dominio.EntidadeValida;
 import br.com.jornadadeveficiente.casadocodigo.comum.dominio.UniqueValue;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.Livro;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -47,15 +46,14 @@ public class NovoLivroRequest {
 
   @NotNull
   @Future
-//  @JsonFormat(pattern = "yyyy-mm-dd", shape = JsonFormat.Shape.STRING)
   private LocalDate dataPublicacao;
 
   @NotNull
-  @ValidaCategoria
+  @EntidadeValida(entity = Categoria.class)
   private UUID idCategoria;
 
   @NotNull
-  @ValidaAutor
+  @EntidadeValida(entity = Autor.class)
   private UUID idAutor;
 
   @JsonGetter

@@ -1,16 +1,18 @@
-package br.com.jornadadeveficiente.casadocodigo.categoria.dominio;
+package br.com.jornadadeveficiente.casadocodigo.comum.dominio;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = {CategoriaValidator.class})
+@Constraint(validatedBy = {EntidadeValidaValidator.class})
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidaCategoria {
+public @interface EntidadeValida {
 
-  String message() default "{ValidaCategoria}";
+  String message() default "{IdValido}";
+
+  Class entity();
 
   Class<?>[] groups() default {};
 

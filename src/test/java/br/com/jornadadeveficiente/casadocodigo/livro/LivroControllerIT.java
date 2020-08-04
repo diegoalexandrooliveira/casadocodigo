@@ -51,6 +51,8 @@ public class LivroControllerIT {
 
   private Categoria categoria;
   private Autor autor;
+//  @Autowired
+//  private EntityManager entityManager;
 
   @BeforeEach
   public void setup(){
@@ -59,6 +61,7 @@ public class LivroControllerIT {
     categoriaRepository.deleteAll();
     categoria = categoriaRepository.save(new Categoria("Categoria de testes"));
     autor = autorRepository.save(new Autor("Teste", "Descrição teste", "teste@teste.com"));
+//    entityManager.flush();
 
   }
 
@@ -72,7 +75,8 @@ public class LivroControllerIT {
       .paginas(101L)
       .isbn("isbn teste")
       .dataPublicacao(LocalDate.now().plusDays(5))
-      .idCategoria(categoria.getId()).idAutor(autor.getId())
+      .idCategoria(categoria.getId())
+      .idAutor(autor.getId())
       .build();
 
     MvcResult requestResult = mockMvc.perform(MockMvcRequestBuilders

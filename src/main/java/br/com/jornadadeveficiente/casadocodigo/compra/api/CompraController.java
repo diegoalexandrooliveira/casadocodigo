@@ -1,7 +1,7 @@
 package br.com.jornadadeveficiente.casadocodigo.compra.api;
 
 
-import br.com.jornadadeveficiente.casadocodigo.compra.dominio.PaisDaCompraValidator;
+import br.com.jornadadeveficiente.casadocodigo.compra.dominio.EstadoDaCompraValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,11 +16,11 @@ import javax.validation.Valid;
 public class CompraController {
 
   @Autowired
-  private PaisDaCompraValidator paisDaCompraValidator;
+  private EstadoDaCompraValidator estadoDaCompraValidator;
 
   @InitBinder
   public void init(WebDataBinder dataBinder) {
-    dataBinder.addValidators(paisDaCompraValidator);
+    dataBinder.addValidators(estadoDaCompraValidator);
   }
 
 
