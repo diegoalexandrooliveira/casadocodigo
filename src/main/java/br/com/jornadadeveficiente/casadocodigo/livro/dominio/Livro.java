@@ -46,11 +46,11 @@ public class Livro {
   private LocalDate dataPublicacao;
 
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Categoria categoria;
 
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Autor autor;
 
   public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotBlank String sumario, @Min(20) BigDecimal preco, @Min(100) Long paginas, @NotBlank String isbn, @NotNull LocalDate dataPublicacao, @NotNull Categoria categoria, @NotNull Autor autor) {
