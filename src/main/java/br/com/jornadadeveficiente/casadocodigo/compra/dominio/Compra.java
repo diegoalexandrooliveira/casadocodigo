@@ -55,7 +55,7 @@ public class Compra {
 
   @NotNull
   @Size(min = 1)
-  @OneToMany(mappedBy = "compra")
+  @OneToMany(mappedBy = "compra", orphanRemoval = true, cascade = CascadeType.ALL)
   private List<ItemPedido> itens = new ArrayList<>();
 
   public void adicionaItem(ItemPedido item) {

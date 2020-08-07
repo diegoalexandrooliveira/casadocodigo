@@ -27,7 +27,7 @@ public class ItemPedido {
   @Min(1)
   private Long quantidade;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "compra_id")
   @Setter
   private Compra compra;

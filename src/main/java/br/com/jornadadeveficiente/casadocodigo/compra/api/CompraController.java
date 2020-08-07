@@ -1,7 +1,10 @@
 package br.com.jornadadeveficiente.casadocodigo.compra.api;
 
 
-import br.com.jornadadeveficiente.casadocodigo.compra.dominio.*;
+import br.com.jornadadeveficiente.casadocodigo.compra.dominio.Compra;
+import br.com.jornadadeveficiente.casadocodigo.compra.dominio.CompraRepository;
+import br.com.jornadadeveficiente.casadocodigo.compra.dominio.EstadoDaCompraValidator;
+import br.com.jornadadeveficiente.casadocodigo.compra.dominio.TotalDaCompraValidator;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.LivroRepository;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.EstadoRepository;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.PaisRepository;
@@ -30,8 +33,6 @@ public class CompraController {
   private PaisRepository paisRepository;
   @Autowired
   private LivroRepository livroRepository;
-  @Autowired
-  private ItemPedidoRepository itemPedidoRepository;
 
   @InitBinder
   public void init(WebDataBinder dataBinder) {
@@ -43,7 +44,6 @@ public class CompraController {
   public ResponseEntity<Void> salvar(@Valid @RequestBody NovaCompraRequest novaCompraRequest) {
     Compra compra = novaCompraRequest.entidade(estadoRepository, paisRepository, livroRepository);
     compraRepository.save(compra);
-    compra.getItens().forEach(itemPedidoRepository::save);
     return ResponseEntity.ok().build();
   }
 

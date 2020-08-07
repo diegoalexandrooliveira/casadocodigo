@@ -71,6 +71,7 @@ public class NovaCompraRequest {
 
   public Compra entidade(EstadoRepository estadoRepository, PaisRepository paisRepository, LivroRepository livroRepository) {
     Pais pais = paisRepository.findById(this.pais).orElseThrow();
+
     Estado estado = Objects.isNull(this.estado) ? null :
       estadoRepository.findById(this.estado).orElseThrow();
 
