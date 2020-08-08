@@ -2,10 +2,7 @@ package br.com.jornadadeveficiente.casadocodigo.compra.dominio;
 
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.Estado;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.Pais;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -22,6 +19,7 @@ public class Compra {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Getter
   private UUID id;
   @Email
   @NotEmpty
@@ -52,6 +50,9 @@ public class Compra {
   @NotNull
   @Min(1)
   private BigDecimal total;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private Status status;
 
   @NotNull
   @Size(min = 1)
@@ -168,6 +169,7 @@ public class Compra {
       compra.email = this.email;
       compra.cidade = this.cidade;
       itens.forEach(compra::adicionaItem);
+      compra.status = Status.INICIADA;
       return compra;
     }
   }

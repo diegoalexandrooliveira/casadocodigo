@@ -6,8 +6,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -19,6 +19,6 @@ public class ItemPedidoRequest {
   private UUID idLivro;
 
   @NotNull
-  @Min(1)
+  @Positive
   private Long quantidade;
 }

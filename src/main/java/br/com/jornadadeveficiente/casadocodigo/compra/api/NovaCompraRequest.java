@@ -51,7 +51,7 @@ public class NovaCompraRequest {
   private String cep;
 
   @NotNull
-  @Min(1)
+  @Positive
   private BigDecimal total;
 
   @NotNull

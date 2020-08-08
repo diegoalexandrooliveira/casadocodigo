@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping(path = "/api/compras")
@@ -44,7 +45,7 @@ public class CompraController {
   public ResponseEntity<Void> salvar(@Valid @RequestBody NovaCompraRequest novaCompraRequest) {
     Compra compra = novaCompraRequest.entidade(estadoRepository, paisRepository, livroRepository);
     compraRepository.save(compra);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.created(URI.create(String.format("/api/compras/%s", compra.getId()))).build();
   }
 
 
