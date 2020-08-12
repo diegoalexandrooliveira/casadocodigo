@@ -5,6 +5,7 @@ import br.com.jornadadeveficiente.casadocodigo.compra.dominio.Compra;
 import br.com.jornadadeveficiente.casadocodigo.compra.dominio.CompraRepository;
 import br.com.jornadadeveficiente.casadocodigo.compra.dominio.EstadoDaCompraValidator;
 import br.com.jornadadeveficiente.casadocodigo.compra.dominio.TotalDaCompraValidator;
+import br.com.jornadadeveficiente.casadocodigo.cupom.dominio.CupomRepository;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.LivroRepository;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.EstadoRepository;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.PaisRepository;
@@ -34,6 +35,8 @@ public class CompraController {
   private PaisRepository paisRepository;
   @Autowired
   private LivroRepository livroRepository;
+  @Autowired
+  private CupomRepository cupomRepository;
 
   @InitBinder
   public void init(WebDataBinder dataBinder) {
@@ -43,7 +46,7 @@ public class CompraController {
 
   @PostMapping
   public ResponseEntity<Void> salvar(@Valid @RequestBody NovaCompraRequest novaCompraRequest) {
-    Compra compra = novaCompraRequest.entidade(estadoRepository, paisRepository, livroRepository);
+    Compra compra = novaCompraRequest.entidade(estadoRepository, paisRepository, livroRepository, cupomRepository);
     compraRepository.save(compra);
     return ResponseEntity.created(URI.create(String.format("/api/compras/%s", compra.getId()))).build();
   }

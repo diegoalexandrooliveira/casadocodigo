@@ -3,6 +3,8 @@ package br.com.jornadadeveficiente.casadocodigo.compra.api;
 import br.com.jornadadeveficiente.casadocodigo.compra.dominio.Compra;
 import br.com.jornadadeveficiente.casadocodigo.compra.dominio.ItemPedido;
 import br.com.jornadadeveficiente.casadocodigo.comum.dominio.EntidadeValida;
+import br.com.jornadadeveficiente.casadocodigo.cupom.dominio.Cupom;
+import br.com.jornadadeveficiente.casadocodigo.cupom.dominio.CupomRepository;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.Livro;
 import br.com.jornadadeveficiente.casadocodigo.livro.dominio.LivroRepository;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.Estado;
@@ -12,6 +14,7 @@ import br.com.jornadadeveficiente.casadocodigo.pais.dominio.PaisRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -59,6 +62,9 @@ public class NovaCompraRequest {
   @Valid
   private List<ItemPedidoRequest> itens;
 
+  @EntidadeValida(entity = Cupom.class, attribute = "codigo")
+  private String codigoCupom;
+
   public Set<UUID> getIdLivros() {
     return itens.stream()
       .map(ItemPedidoRequest::getIdLivro)
@@ -69,7 +75,7 @@ public class NovaCompraRequest {
     return Collections.unmodifiableList(itens);
   }
 
-  public Compra entidade(EstadoRepository estadoRepository, PaisRepository paisRepository, LivroRepository livroRepository) {
+  public Compra entidade(EstadoRepository estadoRepository, PaisRepository paisRepository, LivroRepository livroRepository, CupomRepository cupomRepository) {
     Pais pais = paisRepository.findById(this.pais).orElseThrow();
 
     Estado estado = Objects.isNull(this.estado) ? null :
@@ -80,6 +86,9 @@ public class NovaCompraRequest {
         Livro livro = livroRepository.findById(item.getIdLivro()).orElseThrow();
         return new ItemPedido(livro, item.getQuantidade());
       }).collect(Collectors.toList());
+
+
+    Cupom cupom = StringUtils.hasText(codigoCupom) ? cupomRepository.getByCodigo(codigoCupom) : null;
 
     return Compra.builder()
       .email(email)
@@ -95,6 +104,7 @@ public class NovaCompraRequest {
       .total(total)
       .complemento(complemento)
       .itens(itensPedido)
+      .cupom(cupom)
       .build();
   }
 

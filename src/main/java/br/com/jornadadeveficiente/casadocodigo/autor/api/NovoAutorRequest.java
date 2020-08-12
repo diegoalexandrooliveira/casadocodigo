@@ -19,7 +19,7 @@ public class NovoAutorRequest {
 
   @Email
   @NotBlank
-  @UniqueValue(fieldName = "email", entity = "autores")
+  @UniqueValue(fieldName = "email", entity = "Autor")
   private String email;
 
   public NovoAutorRequest(@NotBlank String nome, @Size @NotBlank String descricao, @Email @NotBlank String email) {

@@ -7,4 +7,6 @@ import java.util.UUID;
 
 @Repository
 public interface CupomRepository extends JpaRepository<Cupom, UUID> {
+
+  Cupom getByCodigo(String codigo);
 }

@@ -38,4 +38,8 @@ public class Cupom {
     this.percentual = percentual;
     this.validade = validade;
   }
+
+  public boolean valido() {
+    return LocalDateTime.now().compareTo(this.validade) <= 0;
+  }
 }

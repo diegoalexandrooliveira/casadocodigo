@@ -14,6 +14,8 @@ public @interface EntidadeValida {
 
   Class entity();
 
+  String attribute() default "id";
+
   Class<?>[] groups() default {};
 
   Class<? extends Payload>[] payload() default {};

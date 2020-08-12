@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "autores")
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

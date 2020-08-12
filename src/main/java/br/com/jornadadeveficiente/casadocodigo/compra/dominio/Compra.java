@@ -1,16 +1,15 @@
 package br.com.jornadadeveficiente.casadocodigo.compra.dominio;
 
+import br.com.jornadadeveficiente.casadocodigo.cupom.dominio.Cupom;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.Estado;
 import br.com.jornadadeveficiente.casadocodigo.pais.dominio.Pais;
 import lombok.*;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -53,6 +52,9 @@ public class Compra {
   @NotNull
   @Enumerated(EnumType.STRING)
   private Status status;
+  @Embedded
+  private CupomAplicado cupomAplicado;
+
 
   @NotNull
   @Size(min = 1)
@@ -87,6 +89,7 @@ public class Compra {
     private String cep;
     private BigDecimal total;
     private List<ItemPedido> itens = new ArrayList<>();
+    private Cupom cupom;
 
 
     public CompraBuilder email(String email) {
@@ -149,6 +152,11 @@ public class Compra {
       return this;
     }
 
+    public CompraBuilder cupom(Cupom cupom) {
+      this.cupom = cupom;
+      return this;
+    }
+
     public CompraBuilder itens(@NonNull List<ItemPedido> itens) {
       this.itens = itens;
       return this;
@@ -170,6 +178,10 @@ public class Compra {
       compra.cidade = this.cidade;
       itens.forEach(compra::adicionaItem);
       compra.status = Status.INICIADA;
+      if(Objects.nonNull(this.cupom)){
+        Assert.isTrue(this.cupom.valido(), "Cupom não é válido.");
+        compra.cupomAplicado = new CupomAplicado(this.cupom);
+      }
       return compra;
     }
   }
