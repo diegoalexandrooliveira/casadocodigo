@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/compras")
@@ -51,5 +52,10 @@ public class CompraController {
     return ResponseEntity.created(URI.create(String.format("/api/compras/%s", compra.getId()))).build();
   }
 
+  @GetMapping(path = "/{id}")
+  public ResponseEntity<CompraDTO> detalhe(@PathVariable("id") UUID id) {
+    Compra compra = compraRepository.findCompraById(id);
+    return ResponseEntity.ok(CompraDTO.from(compra));
+  }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Entity
@@ -22,18 +23,25 @@ public class Compra {
   private UUID id;
   @Email
   @NotEmpty
+  @Getter
   private String email;
   @NotEmpty
+  @Getter
   private String nome;
   @NotEmpty
+  @Getter
   private String sobrenome;
   @NotEmpty
+  @Getter
   private String documento;
   @NotEmpty
+  @Getter
   private String endereco;
   @NotEmpty
+  @Getter
   private String complemento;
   @NotEmpty
+  @Getter
   private String cidade;
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
@@ -43,14 +51,22 @@ public class Compra {
   @JoinColumn(name = "estado_id")
   private Estado estado;
   @NotEmpty
+  @Getter
   private String telefone;
   @NotEmpty
+  @Getter
   private String cep;
   @NotNull
-  @Min(1)
+  @Positive
+  @Getter
   private BigDecimal total;
   @NotNull
+  @Positive
+  @Getter
+  private BigDecimal totalSemDesconto;
+  @NotNull
   @Enumerated(EnumType.STRING)
+  @Getter
   private Status status;
   @Embedded
   private CupomAplicado cupomAplicado;
@@ -73,6 +89,22 @@ public class Compra {
 
   public List<ItemPedido> getItens() {
     return Collections.unmodifiableList(this.itens);
+  }
+
+  public String getNomePais() {
+    return pais.getNome();
+  }
+
+  public String getNomeEstado() {
+    return Objects.isNull(estado) ? "" : estado.getNome();
+  }
+
+  public boolean existeCupom() {
+    return Objects.nonNull(cupomAplicado);
+  }
+
+  public BigDecimal valorCupom(){
+    return totalSemDesconto.subtract(total);
   }
 
   public static final class CompraBuilder {
@@ -173,6 +205,7 @@ public class Compra {
       compra.endereco = this.endereco;
       compra.cep = this.cep;
       compra.total = this.total;
+      compra.totalSemDesconto = this.total;
       compra.documento = this.documento;
       compra.email = this.email;
       compra.cidade = this.cidade;
@@ -181,6 +214,7 @@ public class Compra {
       if(Objects.nonNull(this.cupom)){
         Assert.isTrue(this.cupom.valido(), "Cupom não é válido.");
         compra.cupomAplicado = new CupomAplicado(this.cupom);
+        compra.total = total.subtract(cupom.getPercentual().divide(BigDecimal.valueOf(100), RoundingMode.HALF_DOWN).multiply(total));
       }
       return compra;
     }
